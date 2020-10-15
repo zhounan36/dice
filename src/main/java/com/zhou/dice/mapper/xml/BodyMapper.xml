@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.BodyMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `body`
+        <where>
+            <if test="Bid != null">
+
+                `Bid` = #{Bid}
+
+            </if>
+
+            <if test="Tid != null">
+
+                and `Tid` = #{Tid}
+
+            </if>
+
+            <if test="Uid != null">
+
+                and `Uid` = #{Uid}
+
+            </if>
+
+            <if test="Bcontent != null">
+
+                and `Bcontent` = #{Bcontent}
+
+            </if>
+
+            <if test="Bdate != null">
+
+                and `Bdate` = #{Bdate}
+
+            </if>
+
+            <if test="Btype != null">
+
+                and `Btype` = #{Btype}
+
+            </if>
+
+            <if test="Bpage != null">
+
+                and `Bpage` = #{Bpage}
+
+            </if>
+
+            <if test="BnextPageId != null">
+
+                and `BnextPageId` = #{BnextPageId}
+
+            </if>
+
+        </where>
+
+        ORDER BY `Bid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `body` (Bid, Tid, Uid, Bcontent,Bdate,Btype,Bpage,BnextPageId) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Bid}, #{item.Tid},#{item.Uid}, #{item.Bcontent}, #{item.Bdate},#{item.Btype}, #{item.Bpage}, #{item.BnextPageId})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `body`
+        <set>
+            <if test="Tid != null">Tid= #{Tid},</if>
+            <if test="Uid != null">Uid= #{Uid},</if>
+            <if test="Bcontent != null">Bcontent= #{Bcontent},</if>
+            <if test="Bdate != null">Bdate= #{Bdate},</if>
+            <if test="Btype != null">Btype= #{Btype},</if>
+            <if test="Bpage != null">Bpage= #{Bpage},</if>
+            <if test="BnextPageId != null">BnextPageId= #{BnextPageId}</if>
+        </set>
+        WHERE Bid = #{Bid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `body` WHERE Bid = #{Bid};
+    </delete>
+
+</mapper>

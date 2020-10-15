@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.SectionMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `section`
+        <where>
+            <if test="Sid != null">
+
+                `Sid` = #{Sid}
+
+            </if>
+
+            <if test="Sname != null">
+
+                and `Sname` = #{Sname}
+
+            </if>
+
+
+        </where>
+
+        ORDER BY `Sid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `section` (Sid, Sname) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Sid}, #{item.Sname})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `section`
+        <set>
+            <if test="Sname != null">Sname= #{Sname}</if>
+        </set>
+        WHERE Sid = #{Sid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `section` WHERE Sid = #{Sid};
+    </delete>
+
+</mapper>

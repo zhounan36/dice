@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.CardMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `card`
+        <where>
+            <if test="Cardid != null">
+
+                `Cardid` = #{Cardid}
+
+            </if>
+
+            <if test="Tid != null">
+
+                and `Tid` = #{Tid}
+
+            </if>
+
+            <if test="Pname != null">
+
+                and `Pname` = #{Pname}
+
+            </if>
+
+            <if test="Pcontent != null">
+
+                and `Pcontent` = #{Pcontent}
+
+            </if>
+
+            <if test="Pimg != null">
+
+                and `Pimg` = #{Pimg}
+
+            </if>
+
+            <if test="Ppage != null">
+
+                and `Ppage` = #{Ppage}
+
+            </if>
+
+            <if test="Ptype != null">
+
+                and `Ptype` = #{Ptype}
+
+            </if>
+
+
+        </where>
+
+        ORDER BY `Cardid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `card` (Cardid, Tid, Pname, Pcontent,Pimg,Ppage,Ptype) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Cardid}, #{item.Tid}, #{item.Pname}, #{item.Pcontent},#{item.Pimg}, #{item.Ppage}, #{item.Ptype})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `card`
+        <set>
+            <if test="Tid != null">Tid= #{Tid},</if>
+            <if test="Pname != null">Pname= #{Pname},</if>
+            <if test="Pcontent != null">Pcontent= #{Pcontent},</if>
+            <if test="Pimg != null">Pimg= #{Pimg},</if>
+            <if test="Ppage != null">Ppage= #{Ppage},</if>
+            <if test="Ptype != null">Ptype= #{Ptype}</if>
+        </set>
+        WHERE Cardid = #{Cardid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `card` WHERE Cardid = #{Cardid};
+    </delete>
+
+</mapper>

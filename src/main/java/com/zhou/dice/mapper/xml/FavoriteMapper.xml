@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.FavoriteMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `favorite`
+        <where>
+            <if test="Fid != null">
+
+                `Fid` = #{Fid}
+
+            </if>
+
+            <if test="Uid != null">
+
+                and `Uid` = #{Uid}
+
+            </if>
+
+            <if test="Tid != null">
+
+                and `Tid` = #{Tid}
+
+            </if>
+
+        </where>
+
+        ORDER BY `Fid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `dice` (Fid, Uid, Tid) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Fid}, #{item.Uid}, #{item.Tid})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `dice`
+        <set>
+            <if test="Uid != null">Uid= #{Uid},</if>
+            <if test="Tid != null">Tid= #{Tid}</if>
+        </set>
+        WHERE Fid = #{Fid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `dice` WHERE Fid = #{Fid};
+    </delete>
+
+</mapper>

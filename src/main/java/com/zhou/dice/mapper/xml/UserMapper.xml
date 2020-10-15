@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.UserMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `user`
+        <where>
+            <if test="Uid != null">
+
+                `Uid` = #{Uid}
+
+            </if>
+
+            <if test="Uname != null">
+
+                and `Uname` = #{Uname}
+
+            </if>
+
+            <if test="Upass != null">
+
+                and `Upass` = #{Upass}
+
+            </if>
+
+            <if test="Uemail != null">
+
+                and `Uemail` = #{Uemail}
+
+            </if>
+
+            <if test="roles != null">
+
+                and `roles` = #{roles}
+
+            </if>
+
+
+        </where>
+
+        ORDER BY `Uid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `topic` (Uid, Uname, Upass, Uemail, roles) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Uid}, #{item.Uname}, #{item.Upass}, #{item.Uemail}, #{item.roles})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `user`
+        <set>
+            <if test="Uname != null">Uname= #{Uname},</if>
+            <if test="Upass != null">Upass= #{Upass},</if>
+            <if test="Uemail != null">Uemail= #{Uemail},</if>
+            <if test="roles != null">roles= #{roles}</if>
+        </set>
+        WHERE Uid = #{Uid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `user` WHERE Uid = #{Uid};
+    </delete>
+
+</mapper>

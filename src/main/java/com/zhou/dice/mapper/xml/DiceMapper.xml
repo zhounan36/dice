@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.DiceMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `dice`
+        <where>
+            <if test="Did != null">
+
+                `Did` = #{Did}
+
+            </if>
+
+            <if test="Uid != null">
+
+                and `Uid` = #{Uid}
+
+            </if>
+
+            <if test="Dtype != null">
+
+                and `Dtype` = #{Dtype}
+
+            </if>
+
+            <if test="TopicLimtId != null">
+
+                and `TopicLimtId` = #{TopicLimtId}
+
+            </if>
+
+            <if test="Used != null">
+
+                and `Used` = #{Used}
+
+            </if>
+
+            <if test="RollNum != null">
+
+                and `RollNum` = #{RollNum}
+
+            </if>
+
+            <if test="RollTopic != null">
+
+                and `RollTopic` = #{RollTopic}
+
+            </if>
+
+            <if test="RollBody != null">
+
+                and `RollBody` = #{RollBody}
+
+            </if>
+
+
+        </where>
+
+        ORDER BY `Did` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `dice` (Did, Uid, Dtype, TopicLimtId,Used,RollNum,RollTopic,RollBody) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Did}, #{item.Uid}, #{item.Dtype}, #{item.TopicLimtId},#{item.Used}, #{item.RollNum}, #{item.RollTopic}, #{item.RollBody})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `dice`
+        <set>
+            <if test="Uid != null">Uid= #{Uid},</if>
+            <if test="Dtype != null">Dtype= #{Dtype},</if>
+            <if test="TopicLimtId != null">TopicLimtId= #{TopicLimtId},</if>
+            <if test="Used != null">Used= #{Used},</if>
+            <if test="RollNum != null">RollNum= #{RollNum},</if>
+            <if test="RollTopic != null">RollTopic= #{RollTopic}</if>
+        </set>
+        WHERE Did = #{Did}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `changepoint` WHERE Did = #{Did};
+    </delete>
+
+</mapper>

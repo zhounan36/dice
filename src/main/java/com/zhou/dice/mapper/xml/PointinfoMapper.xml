@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.PointinfoMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `pointinfo`
+        <where>
+            <if test="PointInfoId != null">
+
+                `PointInfoId` = #{PointInfoId}
+
+            </if>
+
+            <if test="Uid != null">
+
+                and `Cid` = #{Cid}
+
+            </if>
+
+            <if test="PointName != null">
+
+                and `PointName` = #{PointName}
+
+            </if>
+
+            <if test="PointCount != null">
+
+                and `PointCount` = #{PointCount}
+
+            </if>
+
+            <if test="NextPage != null">
+
+                and `NextPage` = #{NextPage}
+
+            </if>
+
+        </where>
+
+        ORDER BY `PointInfoId` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `pointinfo` (PointInfoId, Cid, PointName,PointCount,NextPage) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.PointInfoId}, #{item.Cid}, #{item.PointName}, #{item.PointCount}, #{item.NextPage})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `pointinfo`
+        <set>
+            <if test="Cid != null">Cid= #{Cid},</if>
+            <if test="PointName != null">PointName= #{PointName},</if>
+            <if test="PointCount != null">PointCount= #{PointCount},</if>
+            <if test="NextPage != null">NextPage= #{NextPage}</if>
+        </set>
+        WHERE PointInfoId = #{PointInfoId}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `pointinfo` WHERE PointInfoId = #{PointInfoId};
+    </delete>
+
+</mapper>

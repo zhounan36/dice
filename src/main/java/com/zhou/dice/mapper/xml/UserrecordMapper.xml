@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.UserrecordMapper">
+
+    <select id="getBySome">
+        SELECT * FROM `userrecord`
+        <where>
+            <if test="Rid != null">
+
+                `Rid` = #{Rid}
+
+            </if>
+
+            <if test="Uid != null">
+
+                and `Uid` = #{Uid}
+
+            </if>
+
+            <if test="Tid != null">
+
+                and `Tid` = #{Tid}
+
+            </if>
+
+            <if test="PageNum != null">
+
+                and `PageNum` = #{PageNum}
+
+            </if>
+
+
+        </where>
+
+        ORDER BY `Rid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `userrecord` (Rid, Uid, Tid, PageNum) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Rid}, #{item.Uid}, #{item.Tid}, #{item.PageNum})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `userrecord`
+        <set>
+            <if test="Uid != null">Uid= #{Uid},</if>
+            <if test="Upass != null">Upass= #{Upass},</if>
+            <if test="Uemail != null">Uemail= #{Uemail},</if>
+            <if test="roles != null">roles= #{roles}</if>
+        </set>
+        WHERE Rid = #{Rid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `userrecord` WHERE Uid = #{Uid};
+    </delete>
+
+</mapper>

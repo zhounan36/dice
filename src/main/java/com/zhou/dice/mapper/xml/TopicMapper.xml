@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.TopicMapper">
+
+
+    <select id="getBySome">
+        SELECT * FROM `topic`
+        <where>
+            <if test="Tid != null">
+
+                `Tid` = #{Tid}
+
+            </if>
+
+            <if test="Sid != null">
+
+                and `Sid` = #{Sid}
+
+            </if>
+
+            <if test="Uid != null">
+
+                and `Uid` = #{Uid}
+
+            </if>
+
+            <if test="Tname != null">
+
+                and `Tname` = #{Tname}
+
+            </if>
+
+            <if test="Tcontent != null">
+
+                and `Tcontent` = #{Tcontent}
+
+            </if>
+
+            <if test="Tdate != null">
+
+                and `Tdate` = #{Tdate}
+
+            </if>
+
+            <if test="TreplyCount != null">
+
+                and `TreplyCount` = #{TreplyCount}
+
+            </if>
+
+            <if test="Tlastdate != null">
+
+                and `Tlastdate` = #{Tlastdate}
+
+            </if>
+
+
+        </where>
+
+        ORDER BY `Tid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `topic` (Tid, Sid, Uid, Tname, Tcontent, Tdate, TreplyCount, Tlastdate) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Tid}, #{item.Sid}, #{item.Uid}, #{item.Tname}, #{item.Tcontent}, #{item.Tdate}, #{item.TreplyCount}, #{item.Tlastdate})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `topic`
+        <set>
+            <if test="Sid != null">Sid= #{Sid},</if>
+            <if test="Uid != null">Uid= #{Uid},</if>
+            <if test="Tname != null">Tname= #{Tname},</if>
+            <if test="Tcontent != null">Tcontent= #{Tcontent},</if>
+            <if test="Tdate != null">Tdate= #{Tdate},</if>
+            <if test="TreplyCount != null">TreplyCount= #{TreplyCount},</if>
+            <if test="Tlastdate != null">Tlastdate= #{Tlastdate}</if>
+        </set>
+        WHERE Tid = #{Tid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `topic` WHERE Tid = #{Tid};
+    </delete>
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.dice.mapper.ReplyMapper">
+
+
+    <select id="getBySome">
+        SELECT * FROM `reply`
+        <where>
+            <if test="Replyid != null">
+
+                `Replyid` = #{Replyid}
+
+            </if>
+
+            <if test="Bid != null">
+
+                and `Bid` = #{Bid}
+
+            </if>
+
+            <if test="Uid != null">
+
+                and `Uid` = #{Uid}
+
+            </if>
+
+            <if test="ReplyTitle != null">
+
+                and `ReplyTitle` = #{ReplyTitle}
+
+            </if>
+
+            <if test="ReplyContext != null">
+
+                and `ReplyContext` = #{ReplyContext}
+
+            </if>
+
+        </where>
+
+        ORDER BY `Replyid` DESC
+
+    </select>
+
+    <insert id="add">
+        insert into `reply` (Replyid, Bid, Uid,ReplyTitle,ReplyContext) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.Replyid}, #{item.Bid}, #{item.Uid}, #{item.ReplyTitle}, #{item.ReplyContext})
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `reply`
+        <set>
+            <if test="Bid != null">Bid= #{Bid},</if>
+            <if test="Uid != null">Uid= #{Uid},</if>
+            <if test="ReplyTitle != null">ReplyTitle= #{ReplyTitle},</if>
+            <if test="ReplyContext != null">ReplyContext= #{ReplyContext}</if>
+        </set>
+        WHERE Replyid = #{Replyid}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM `reply` WHERE Replyid = #{Replyid};
+    </delete>
+
+</mapper>
